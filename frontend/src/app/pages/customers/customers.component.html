@@ -1,0 +1,116 @@
+<div class="flex gap-10">
+  <div class="flex-grow">
+    <div class="flex items-center justify-between mb-4">
+      <button nz-button [routerLink]="['/customer/edit', -1]">
+        <span nz-icon nzType="plus"></span>
+        Add Customer
+      </button>
+      <nz-input-group [nzSuffix]="suffixIconSearch" class="w-[220px]">
+        <input
+          type="text"
+          nz-input
+          placeholder="Search..."
+          [(ngModel)]="search"
+        />
+      </nz-input-group>
+    </div>
+    <nz-table
+      #basicTable
+      nzSize="small"
+      [nzData]="customers"
+      [nzLoading]="isLoading"
+      [nzShowPagination]="false"
+      [nzFrontPagination]="false"
+      [(nzPageSize)]="pageSize"
+      [(nzPageIndex)]="pageIndex"
+      (nzQueryParams)="getCustomers($event)"
+      class="shadow rounded"
+    >
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Short Name</th>
+          <th>Territory</th>
+          <th>Sales Person</th>
+          <th>Consignee</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of basicTable.data">
+          <td>{{ s.code }}</td>
+          <td>{{ s.name }}</td>
+          <td>{{ s.shortName }}</td>
+          <td>{{ s.territory }}</td>
+          <td>{{ s.salesPerson }}</td>
+          <td>{{ s.consignee }}</td>
+          <td>{{ s.type }}</td>
+          <td>
+            <span
+              class="badge"
+              [ngClass]="{
+                green: s.status === 'ACTIVE',
+                red: s.status === 'INACTIVE'
+              }"
+            >
+              {{ s.status }}
+            </span>
+          </td>
+          <td>
+            <div class="flex gap-4 items-center">
+              <span
+                class="text-red-400 text-base cursor-pointer"
+                nz-icon
+                nzType="delete"
+                nzTheme="outline"
+                nz-tooltip
+                nzTooltipTitle="Delete"
+                nz-popconfirm
+                nzPopconfirmPlacement="bottom"
+                nzPopconfirmTitle="Are you sure delete this customer?"
+                (nzOnConfirm)="deleteCustomer(s.id)"
+              ></span>
+              <span
+                class="text-blue-400 text-base cursor-pointer"
+                nz-icon
+                nzType="edit"
+                nzTheme="outline"
+                nz-tooltip
+                nzTooltipTitle="Edit"
+                [routerLink]="['/customer/edit', s.id]"
+              ></span>
+              <!-- (click)="customerId = s.id" -->
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <div class="flex justify-end mt-4">
+      <nz-pagination
+        nzSize="small"
+        [(nzPageIndex)]="pageIndex"
+        [(nzPageSize)]="pageSize"
+        [nzTotal]="total"
+        [nzShowTotal]="rangeTemplate"
+        nzShowSizeChanger
+      ></nz-pagination>
+    </div>
+  </div>
+  <!-- <div class="shadow border border-gray-100 rounded p-6 self-start">
+    <app-customer-form
+      [(customerId)]="customerId"
+      (onFormSubmit)="getCustomers()"
+    ></app-customer-form>
+  </div> -->
+</div>
+
+<ng-template #rangeTemplate let-range="range" let-total>
+  {{ range[0] }}-{{ range[1] }} of {{ total }} items
+</ng-template>
+
+<ng-template #suffixIconSearch>
+  <span nz-icon nzType="search"></span>
+</ng-template>

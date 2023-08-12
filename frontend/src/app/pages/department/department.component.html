@@ -1,0 +1,78 @@
+<div class="flex gap-10" @fade>
+  <div class="flex-grow">
+    <nz-table
+      #basicTable
+      nzSize="small"
+      [nzData]="departments"
+      [nzLoading]="isLoading"
+      [nzShowPagination]="false"
+      [(nzPageSize)]="pageSize"
+      [(nzPageIndex)]="pageIndex"
+    >
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Per Month Salary</th>
+          <th>OT Salary</th>
+          <th>Sunday Salary</th>
+          <th>Leave Detection</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of basicTable.data">
+          <td>{{ d.name }}</td>
+          <td>{{ d.monthlySalary }}</td>
+          <td>{{ d.otSalary }}</td>
+          <td>{{ d.sundaySalary }}</td>
+          <td>{{ d.leaveDetection }}</td>
+          <td>
+            <div class="flex gap-4 items-center">
+              <span
+                class="text-red-400 text-base cursor-pointer"
+                nz-icon
+                nzType="delete"
+                nzTheme="outline"
+                nz-tooltip
+                nzTooltipTitle="Delete"
+                nz-popconfirm
+                nzPopconfirmPlacement="bottom"
+                nzPopconfirmTitle="Are you sure delete this department?"
+                (nzOnConfirm)="deleteDepartment(d.id)"
+              ></span>
+              <span
+                class="text-blue-400 text-base cursor-pointer"
+                nz-icon
+                nzType="edit"
+                nzTheme="outline"
+                nz-tooltip
+                nzTooltipTitle="Edit"
+                (click)="departmentId = d.id"
+              ></span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <div class="flex justify-end mt-4">
+      <nz-pagination
+        nzSize="small"
+        [(nzPageIndex)]="pageIndex"
+        [(nzPageSize)]="pageSize"
+        [nzTotal]="total"
+        [nzShowTotal]="rangeTemplate"
+        nzShowSizeChanger
+      ></nz-pagination>
+    </div>
+  </div>
+  <div class="shadow border border-gray-100 rounded p-6">
+    <app-department-form
+      [(departmentId)]="departmentId"
+      (onFormSubmit)="getDepartments()"
+    ></app-department-form>
+
+    <ng-template #rangeTemplate let-range="range" let-total>
+      {{ range[0] }}-{{ range[1] }} of {{ total }} items
+    </ng-template>
+  </div>
+</div>

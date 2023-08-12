@@ -1,0 +1,124 @@
+<div class="flex gap-10" @fade>
+  <div class="flex-grow">
+    <div class="flex items-center justify-between mb-4">
+      <button nz-button (click)="isDownload = !isDownload">
+        <i nz-icon nzTheme="outline" nzType="download"></i>
+        Download Transaction
+      </button>
+      <nz-input-group [nzSuffix]="suffixIconSearch" class="w-[220px]">
+        <input
+          type="text"
+          nz-input
+          placeholder="Search..."
+          [(ngModel)]="search"
+        />
+      </nz-input-group>
+    </div>
+    <nz-table
+      #basicTable
+      nzSize="small"
+      [nzData]="transactions"
+      [nzLoading]="isLoading"
+      [nzShowPagination]="false"
+      [(nzPageSize)]="pageSize"
+      [(nzPageIndex)]="pageIndex"
+      (nzQueryParams)="getTransactions($event)"
+      class="shadow rounded"
+    >
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>User</th>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Quantity</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of basicTable.data">
+          <td>{{ s.inventoryItem }}</td>
+          <td>{{ s.userName }}</td>
+          <td>{{ s.date | date : "dd-MM-yyyy" }}</td>
+          <td>
+            <span class="badge" [ngClass]="{ green: s.inward, red: s.outward }">
+              {{ s.inward ? "Inward" : "Outward" }}
+            </span>
+          </td>
+          <td>{{ s.inward ? s.inward : s.outward }}</td>
+          <td>
+            <div class="flex gap-4 items-center">
+              <span
+                *ngIf="user.id === s.userId || user.role === 'ADMIN'"
+                class="text-red-400 text-base cursor-pointer"
+                nz-icon
+                nzType="delete"
+                nzTheme="outline"
+                nz-tooltip
+                nzTooltipTitle="Delete"
+                nz-popconfirm
+                nzPopconfirmPlacement="bottom"
+                nzPopconfirmTitle="Are you sure delete this transaction?"
+                (nzOnConfirm)="deleteTransaction(s.id)"
+              ></span>
+              <span
+                *ngIf="user.role === 'ADMIN'"
+                class="text-blue-400 text-base cursor-pointer"
+                nz-icon
+                nzType="edit"
+                nzTheme="outline"
+                nz-tooltip
+                nzTooltipTitle="Edit"
+                (click)="transactionId = s.id"
+              ></span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <div class="flex justify-end mt-4">
+      <nz-pagination
+        nzSize="small"
+        [(nzPageIndex)]="pageIndex"
+        [(nzPageSize)]="pageSize"
+        [nzTotal]="total"
+        [nzShowTotal]="rangeTemplate"
+        nzShowSizeChanger
+      ></nz-pagination>
+    </div>
+  </div>
+  <div class="shadow border border-gray-100 rounded p-6 self-start">
+    <app-transaction-form
+      [(transactionId)]="transactionId"
+      (onFormSubmit)="getTransactions()"
+    ></app-transaction-form>
+  </div>
+</div>
+
+<ng-template #rangeTemplate let-range="range" let-total>
+  {{ range[0] }}-{{ range[1] }} of {{ total }} items
+</ng-template>
+
+<ng-template #suffixIconSearch>
+  <span nz-icon nzType="search"></span>
+</ng-template>
+
+<nz-modal
+  [(nzVisible)]="isDownload"
+  nzTitle="Export Attendance"
+  (nzOnCancel)="isDownload = !isDownload"
+  [nzFooter]="null"
+>
+  <ng-container *nzModalContent>
+    <div class="flex gap-4">
+      <nz-range-picker
+        [(ngModel)]="dateRange"
+        [nzDisabledDate]="disabledDate"
+      ></nz-range-picker>
+      <button nz-button nzType="primary" (click)="downloadTransaction()">
+        <i nz-icon nzTheme="outline" nzType="download"></i>
+        Download
+      </button>
+    </div>
+  </ng-container>
+</nz-modal>

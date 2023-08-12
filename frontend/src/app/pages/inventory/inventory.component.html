@@ -1,0 +1,129 @@
+<div class="flex gap-10" @fade>
+  <div class="flex-grow">
+    <!-- <div class="flex items-center justify-end mb-4">
+      <nz-input-group [nzSuffix]="suffixIconSearch" class="w-[220px]">
+        <input
+          type="text"
+          nz-input
+          placeholder="Search..."
+          [(ngModel)]="search"
+        />
+      </nz-input-group>
+    </div> -->
+    <nz-table
+      #basicTable
+      nzSize="small"
+      [nzData]="inventory"
+      [nzLoading]="isLoading"
+      [nzShowPagination]="false"
+      [nzFrontPagination]="false"
+      [(nzPageSize)]="pageSize"
+      [(nzPageIndex)]="pageIndex"
+      (nzQueryParams)="getInventory($event)"
+      class="shadow rounded"
+    >
+      <thead>
+        <tr>
+          <th>Material</th>
+          <th>Stock</th>
+          <th>Usage</th>
+          <th>Balance</th>
+          <th>Unit</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let inventory of basicTable.data; let i = index">
+          <!-- <ng-container *ngIf="!editCache[i].edit; else editTemplate"> -->
+          <td>{{ inventory.material }}</td>
+          <td>{{ inventory.stock }}</td>
+          <td>{{ inventory.usage }}</td>
+          <td>{{ inventory.stock - inventory.usage }}</td>
+          <td>{{ inventory.unit }}</td>
+          <td>
+            <div class="flex gap-4 items-center">
+              <span
+                class="text-red-400 text-base cursor-pointer"
+                nz-icon
+                nzType="delete"
+                nzTheme="outline"
+                nz-tooltip
+                nzTooltipTitle="Delete"
+                nz-popconfirm
+                nzPopconfirmPlacement="bottom"
+                nzPopconfirmTitle="Are you sure delete this inventory?"
+                (nzOnConfirm)="deleteStudent(inventory.id)"
+              ></span>
+              <span
+                class="text-blue-400 text-base cursor-pointer"
+                nz-icon
+                nzType="edit"
+                nzTheme="outline"
+                nz-tooltip
+                nzTooltipTitle="Edit"
+                (click)="inventoryId = inventory.id"
+              ></span>
+            </div>
+          </td>
+          <!-- </ng-container>
+          <ng-template #editTemplate [formGroup]="form">
+            <td>
+              <nz-form-control nzErrorTip="Please input material name">
+                <input nz-input type="text" formControlName="material" />
+              </nz-form-control>
+            </td>
+
+            <td>
+              <nz-form-control nzErrorTip="Please input stock!">
+                <nz-input-number nz-input type="text" formControlName="stock" />
+              </nz-form-control>
+            </td>
+
+            <td>
+              <nz-form-control nzErrorTip="Please input usage!">
+                <nz-input-number nz-input type="text" formControlName="usage" />
+              </nz-form-control>
+            </td>
+
+            <td>{{ inventory.stock - inventory.usage }}</td>
+
+            <td>
+              <nz-form-control nzErrorTip="Please select unit!">
+                <nz-select formControlName="unit">
+                  <nz-option nzValue="kg" nzLabel="Kilogram(s)"></nz-option>
+                  <nz-option nzValue="l" nzLabel="Liter(s)"></nz-option>
+                  <nz-option nzValue="nos" nzLabel="no(s)"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </td>
+            <td></td>
+          </ng-template> -->
+        </tr>
+      </tbody>
+    </nz-table>
+    <div class="flex justify-end mt-4">
+      <nz-pagination
+        nzSize="small"
+        [(nzPageIndex)]="pageIndex"
+        [(nzPageSize)]="pageSize"
+        [nzTotal]="total"
+        [nzShowTotal]="rangeTemplate"
+        nzShowSizeChanger
+      ></nz-pagination>
+    </div>
+  </div>
+  <div class="shadow border border-gray-100 rounded p-6 self-start">
+    <app-inventory-form
+      [(studentId)]="inventoryId"
+      (onFormSubmit)="getInventory()"
+    ></app-inventory-form>
+  </div>
+</div>
+
+<ng-template #rangeTemplate let-range="range" let-total>
+  {{ range[0] }}-{{ range[1] }} of {{ total }} items
+</ng-template>
+
+<ng-template #suffixIconSearch>
+  <span nz-icon nzType="search"></span>
+</ng-template>

@@ -1,0 +1,32 @@
+<div class="container" @fade>
+  <div class="mb-4">
+    <button nz-button (click)="isDownload = !isDownload">
+      <i nz-icon nzTheme="outline" nzType="download"></i>
+      Download Attendance
+    </button>
+  </div>
+  <div class="flex justify-between items-end">
+    <app-calendar @fade></app-calendar>
+    <attendance-form></attendance-form>
+  </div>
+</div>
+
+<nz-modal
+  [(nzVisible)]="isDownload"
+  nzTitle="Export Attendance"
+  (nzOnCancel)="isDownload = !isDownload"
+  [nzFooter]="null"
+>
+  <ng-container *nzModalContent>
+    <div class="flex gap-4">
+      <nz-range-picker
+        [(ngModel)]="dateRange"
+        [nzDisabledDate]="disabledDate"
+      ></nz-range-picker>
+      <button nz-button nzType="primary" (click)="downloadAttendance()">
+        <i nz-icon nzTheme="outline" nzType="download"></i>
+        Download
+      </button>
+    </div>
+  </ng-container>
+</nz-modal>

@@ -1,0 +1,95 @@
+<div class="flex gap-10" @fade>
+  <div class="flex-grow">
+    <div class="flex items-center justify-end mb-4">
+      <!-- <nz-input-group [nzSuffix]="suffixIconSearch" class="w-[220px]">
+        <input type="text" nz-input placeholder="Search..." 
+        [(ngModel)]="search"
+        />
+      </nz-input-group> -->
+      <button
+        nz-button
+        nzType="primary"
+        [routerLink]="['/transport-bill-edit', -1]"
+      >
+        <span nz-icon nzType="plus" nzTheme="outline"></span>New Bill
+      </button>
+    </div>
+    <nz-table
+      #basicTable
+      nzSize="small"
+      [nzData]="transportBill"
+      [nzLoading]="isLoading"
+      [nzShowPagination]="false"
+      [(nzPageSize)]="pageSize"
+      [(nzPageIndex)]="pageIndex"
+      (nzQueryParams)="getTransportBill($event)"
+      class="shadow rounded"
+    >
+      <thead>
+        <tr>
+          <th>Consignee Name</th>
+          <th>Date</th>
+          <th>GSTin</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of basicTable.data">
+          <td>{{ t.consigneeName }}</td>
+          <td>{{ t.date | date : "dd-MM-yyyy" }}</td>
+          <td>{{ t.gstin }}</td>
+          <td>
+            <div class="flex gap-4 items-center">
+              <span
+                class="text-red-400 text-base cursor-pointer"
+                nz-icon
+                nzType="delete"
+                nzTheme="outline"
+                nz-tooltip
+                nzTooltipTitle="Delete"
+                nz-popconfirm
+                nzPopconfirmPlacement="bottom"
+                nzPopconfirmTitle="Are you sure delete this bill?"
+                (nzOnConfirm)="deleteTransportBill(t.id)"
+              ></span>
+              <span
+                class="text-blue-400 text-base cursor-pointer"
+                nz-icon
+                nzType="edit"
+                nzTheme="outline"
+                nz-tooltip
+                nzTooltipTitle="Edit"
+                [routerLink]="['/transport-bill-edit', t.id]"
+              ></span>
+              <span
+                class="text-blue-400 text-base cursor-pointer"
+                nz-icon
+                nzType="printer"
+                nzTheme="outline"
+                [routerLink]="['/bill-layout', t.id]"
+              ></span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <div class="flex justify-end mt-4">
+      <nz-pagination
+        nzSize="small"
+        [(nzPageIndex)]="pageIndex"
+        [(nzPageSize)]="pageSize"
+        [nzTotal]="total"
+        [nzShowTotal]="rangeTemplate"
+        nzShowSizeChanger
+      ></nz-pagination>
+    </div>
+  </div>
+</div>
+
+<ng-template #rangeTemplate let-range="range" let-total>
+  {{ range[0] }}-{{ range[1] }} of {{ total }} items
+</ng-template>
+
+<ng-template #suffixIconSearch>
+  <span nz-icon nzType="search"></span>
+</ng-template>

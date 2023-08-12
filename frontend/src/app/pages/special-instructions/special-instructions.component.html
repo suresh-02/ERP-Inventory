@@ -1,0 +1,37 @@
+<nz-upload
+  *ngIf="user.role === 'ADMIN' || user.role === 'STAFF'"
+  nzMultiple
+  [(nzFileList)]="fileList"
+  nzAction="http://localhost:3000/api/files/upload"
+>
+  <button nz-button class="w-[200px]">
+    <span nz-icon nzType="plus"></span>
+    Add Pdf
+  </button>
+</nz-upload>
+
+<div
+  *ngIf="(user.role === 'ADMIN' || user.role === 'MENTOR') && files.length > 0"
+  class="flex flex-wrap gap-4 mt-6"
+  [@staggerAnimation]="files.length"
+>
+  <div
+    *ngFor="let file of files; let i = index"
+    class="flex flex-col gap-3 p-3 border border-gray-100 max-w-max"
+    @fadeOut
+  >
+    <div class="flex items-center gap-5">
+      <a [href]="fileUrl(file.fileName)" target="_blank">{{ file.fileName }}</a>
+      <span
+        nz-icon
+        nzType="delete"
+        nz-popconfirm="Are you sure want to delete this pdf?"
+        (nzOnConfirm)="deletePdf(i)"
+        class="text-red-500 cursor-pointer"
+      ></span>
+    </div>
+    <div>
+      <nz-tag nzColor="blue">{{ file.userName }}</nz-tag>
+    </div>
+  </div>
+</div>

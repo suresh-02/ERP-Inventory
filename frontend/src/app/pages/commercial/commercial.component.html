@@ -1,0 +1,64 @@
+<!-- <nz-table
+  #basicTable
+  nzSize="small"
+  [nzShowPagination]="false"
+  [nzFrontPagination]="false"
+  class="shadow rounded"
+>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Short Name</th>
+      <th>Territory</th>
+      <th>Type</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let s of basicTable.data">
+      <td>hello</td>
+      <td>bhaiya</td>
+      <td>work</td>
+      <td>{{ s.territory }}</td>
+      <td>{{ s.type }}</td>
+      <td>
+        <span
+          class="badge"
+          [ngClass]="{
+            green: s.status === 'ACTIVE',
+            red: s.status === 'INACTIVE'
+          }"
+        >
+          {{ s.status }}
+        </span>
+      </td>
+      <td>
+        <div class="flex gap-4 items-center">
+          <span
+            class="text-red-400 text-base cursor-pointer"
+            nz-icon
+            nzType="delete"
+            nzTheme="outline"
+            nz-tooltip
+            nzTooltipTitle="Delete"
+            nz-popconfirm
+            nzPopconfirmPlacement="bottom"
+            nzPopconfirmTitle="Are you sure delete this customer?"
+          ></span>
+          <span
+            class="text-blue-400 text-base cursor-pointer"
+            nz-icon
+            nzType="edit"
+            nzTheme="outline"
+            nz-tooltip
+            nzTooltipTitle="Edit"
+          ></span>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</nz-table> -->
+
+<app-commercial-form></app-commercial-form>

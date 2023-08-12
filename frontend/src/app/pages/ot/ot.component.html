@@ -1,0 +1,105 @@
+<div class="flex gap-10" @fade>
+  <div class="flex-grow">
+    <div class="flex items-center justify-end mb-4">
+      <nz-input-group [nzSuffix]="suffixIconSearch" class="w-[220px]">
+        <input
+          type="text"
+          nz-input
+          placeholder="Search..."
+          [(ngModel)]="search"
+        />
+      </nz-input-group>
+    </div>
+    <nz-table
+      #basicTable
+      nzSize="small"
+      [nzData]="ot"
+      [nzLoading]="isLoading"
+      [nzShowPagination]="false"
+      [nzFrontPagination]="false"
+      [(nzPageSize)]="pageSize"
+      [(nzPageIndex)]="pageIndex"
+      (nzQueryParams)="getOt($event)"
+      class="shadow rounded"
+    >
+      <thead>
+        <tr>
+          <th nzColumnKey="employeeName" [nzSortFn]="true" nzSortOrder="ascend">
+            Employee
+          </th>
+          <th nzColumnKey="date" [nzSortFn]="true">Date</th>
+          <th
+            nzColumnKey="fType"
+            [nzFilterFn]="true"
+            [nzFilters]="[
+              { text: 'Ot', value: 'ot' },
+              { text: 'Sunday', value: 'sunday' }
+            ]"
+          >
+            Type
+          </th>
+          <th>Hours</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of basicTable.data">
+          <td>{{ s.employeeName }}</td>
+          <td>{{ s.date | date : "dd-MM-yyyy" }}</td>
+          <td>
+            <span class="badge" [ngClass]="{ green: s.isOt, red: s.isSunday }">
+              {{ s.isOt ? "Ot" : "Sunday" }}
+            </span>
+          </td>
+          <td>{{ s.hours }}</td>
+          <td>
+            <div class="flex gap-4 items-center">
+              <span
+                class="text-red-400 text-base cursor-pointer"
+                nz-icon
+                nzType="delete"
+                nzTheme="outline"
+                nz-tooltip
+                nzTooltipTitle="Delete"
+                nz-popconfirm
+                nzPopconfirmPlacement="bottom"
+                nzPopconfirmTitle="Are you sure delete this ot?"
+                (nzOnConfirm)="deleteOt(s.id)"
+              ></span>
+              <span
+                class="text-blue-400 text-base cursor-pointer"
+                nz-icon
+                nzType="edit"
+                nzTheme="outline"
+                nz-tooltip
+                nzTooltipTitle="Edit"
+                (click)="otId = s.id"
+              ></span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <div class="flex justify-end mt-4">
+      <nz-pagination
+        nzSize="small"
+        [(nzPageIndex)]="pageIndex"
+        [(nzPageSize)]="pageSize"
+        [nzTotal]="total"
+        [nzShowTotal]="rangeTemplate"
+        nzShowSizeChanger
+      ></nz-pagination>
+    </div>
+  </div>
+  <div class="shadow border border-gray-100 rounded p-6 self-start">
+    <app-ot-form [(otId)]="otId" (onFormSubmit)="getOt()"></app-ot-form>
+  </div>
+</div>
+
+<ng-template #rangeTemplate let-range="range" let-total>
+  {{ range[0] }}-{{ range[1] }} of {{ total }} items
+</ng-template>
+
+<ng-template #suffixIconSearch>
+  <span nz-icon nzType="search"></span>
+</ng-template>
