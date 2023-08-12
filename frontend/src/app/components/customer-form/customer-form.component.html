@@ -1,0 +1,279 @@
+<h1 class="text-lg font-medium mb-4">
+  {{ customerId > 0 ? "Edit" : "Add" }} Customer
+</h1>
+<form nz-form [formGroup]="form" nzLayout="vertical">
+  <div class="grid grid-cols-3 gap-x-4">
+    <nz-form-item>
+      <nz-form-label nzRequired>Name</nz-form-label>
+      <nz-form-control nzErrorTip="Please input name!">
+        <input nz-input formControlName="name" placeholder="Name" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired>Short Name</nz-form-label>
+      <nz-form-control nzErrorTip="Please input Short Name!">
+        <input nz-input formControlName="shortName" placeholder="Short Name" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired>Code</nz-form-label>
+      <nz-form-control nzErrorTip="Please input code!">
+        <input nz-input formControlName="code" placeholder="Code" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired>Type</nz-form-label>
+      <nz-form-control nzErrorTip="Please select type!">
+        <nz-select formControlName="type" nzPlaceHolder="Type">
+          <nz-option nzLabel="Private LTD." nzValue="PVT"></nz-option>
+          <nz-option nzLabel="Sub" nzValue="SUB"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired>Territory</nz-form-label>
+      <nz-form-control nzErrorTip="Please input Territory!">
+        <nz-select
+          formControlName="territory"
+          nzPlaceHolder="Select territory"
+          nzShowSearch
+        >
+          <nz-option
+            [nzLabel]="t"
+            [nzValue]="t"
+            *ngFor="let t of territories"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired>Sales Person</nz-form-label>
+      <nz-form-control nzErrorTip="Please input Sales Person!">
+        <input
+          nz-input
+          formControlName="salesPerson"
+          placeholder="Sales Person"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired>Consignee</nz-form-label>
+      <nz-form-control nzErrorTip="Please input Consignee!">
+        <input nz-input formControlName="consignee" placeholder="Consignee" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>Phone No.</nz-form-label>
+      <nz-form-control>
+        <input nz-input formControlName="phoneNo" placeholder="Phone No." />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>Website</nz-form-label>
+      <nz-form-control>
+        <input nz-input formControlName="website" placeholder="Website" />
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div class="flex items-center mb-4">
+    <h3 class="text-lg font-medium">Address:</h3>
+    <button
+      @fade
+      nz-button
+      nzType="link"
+      (click)="addressForm.push(createAddressForm())"
+      *ngIf="addressForm.length < 2"
+    >
+      <span nz-icon nzType="plus"></span>
+      Add Address
+    </button>
+  </div>
+  <div
+    *ngFor="let _ of addressForm.controls; index as i"
+    formArrayName="address"
+  >
+    <div [formGroupName]="i" class="flex items-end gap-x-4 w-full">
+      <div class="grid grid-cols-4 gap-x-4 w-full">
+        <nz-form-item>
+          <nz-form-label nzRequired>Line 1</nz-form-label>
+          <nz-form-control nzErrorTip="Please input line 1!">
+            <input nz-input formControlName="line1" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired>Line 2</nz-form-label>
+          <nz-form-control nzErrorTip="Please input line 2!">
+            <input nz-input formControlName="line2" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>Line 3</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="line3" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired>City</nz-form-label>
+          <nz-form-control nzErrorTip="Please input city!">
+            <input nz-input formControlName="city" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <button
+        nz-button
+        nzDanger
+        class="mb-6"
+        *ngIf="addressForm.length > 1"
+        (click)="addressForm.removeAt(i)"
+      >
+        <span nz-icon nzType="delete"></span>
+        Delete
+      </button>
+    </div>
+  </div>
+  <div class="flex items-center mb-4">
+    <h3 class="text-lg font-medium">Commercial Details:</h3>
+    <button
+      @fade
+      nz-button
+      nzType="link"
+      (click)="addCommercialDetails()"
+      *ngIf="!this.form.get('commercial')"
+    >
+      <span nz-icon nzType="plus"></span>
+      Add Commercial Details
+    </button>
+  </div>
+  <div
+    class="grid grid-cols-4 gap-4"
+    formGroupName="commercial"
+    *ngIf="this.form.get('commercial')"
+  >
+    <nz-form-item>
+      <nz-form-label nzRequired class="text-gray-700"
+        >Mode of dispatch</nz-form-label
+      >
+      <nz-form-control nzErrorTip="Please select an mode">
+        <nz-select formControlName="mode">
+          <nz-option nzValue="flight" nzLabel="Flight"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired class="text-gray-800">Terms</nz-form-label>
+      <nz-form-control nzErrorTip="Please enter the term">
+        <input nz-input type="text" formControlName="terms" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired> Price basics </nz-form-label>
+      <nz-form-control nzErrorTip="Please enter the form basics">
+        <nz-input-number
+          class="w-full"
+          formControlName="basics"
+        ></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired> Currency </nz-form-label>
+      <nz-form-control nzErrorTip="Please enter the Currency">
+        <nz-input-number
+          class="w-full"
+          formControlName="currency"
+        ></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired> Bill Sequence </nz-form-label>
+      <nz-form-control nzErrorTip="Please enter the bill sequence">
+        <nz-input-number
+          class="w-full"
+          formControlName="billSequence"
+        ></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired> Sales Target </nz-form-label>
+      <nz-form-control nzErrorTip="Please enter the sales target">
+        <nz-input-number
+          class="w-full"
+          formControlName="saleTarget"
+        ></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="col-span-2">
+      <nz-form-label nzRequired> Notes </nz-form-label>
+      <nz-form-control nzErrorTip="Please enter the Notes">
+        <textarea nz-input type="text" formControlName="notes"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div class="flex items-center mb-4">
+    <h3 class="text-lg font-medium">Bank Details:</h3>
+    <button
+      @fade
+      nz-button
+      nzType="link"
+      (click)="bankForm.push(createBankForm())"
+      *ngIf="bankForm.length < 2"
+    >
+      <span nz-icon nzType="plus"></span>
+      Add Bank Details
+    </button>
+  </div>
+  <div *ngFor="let _ of bankForm.controls; index as i" formArrayName="bank">
+    <div [formGroupName]="i" class="flex items-end gap-x-4 w-full">
+      <div class="grid grid-cols-4 gap-x-4 w-full">
+        <nz-form-item>
+          <nz-form-label nzRequired>Name</nz-form-label>
+          <nz-form-control nzErrorTip="Please input Name!">
+            <input nz-input formControlName="name" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired>Account No.</nz-form-label>
+          <nz-form-control nzErrorTip="Please input Account No.!">
+            <input nz-input formControlName="accNo" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired="">Branch Name</nz-form-label>
+          <nz-form-control nzErrorTip="Please input Branch Name!">
+            <input nz-input formControlName="branch" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired>IFSC Code</nz-form-label>
+          <nz-form-control nzErrorTip="Please input IFSC Code!">
+            <input nz-input formControlName="ifsc" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <button
+        nz-button
+        nzDanger
+        class="mb-6"
+        *ngIf="bankForm.length > 1"
+        (click)="bankForm.removeAt(i)"
+      >
+        <span nz-icon nzType="delete"></span>
+        Delete
+      </button>
+    </div>
+  </div>
+
+  <div class="flex gap-4">
+    <button nz-button [nzType]="'primary'" class="flex-grow" (click)="submit()">
+      {{ customerId > 0 ? "Save" : "Add" }}
+    </button>
+    <button
+      nz-button
+      [nzType]="'default'"
+      class="flex-grow"
+      (click)="customerId = -1; form.reset()"
+      *ngIf="customerId > 0"
+    >
+      cancel
+    </button>
+  </div>
+</form>

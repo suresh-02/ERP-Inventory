@@ -1,0 +1,80 @@
+<h1 class="text-lg font-medium text-center">
+  {{ departmentId > 0 ? "Edit" : "Add" }} Department
+</h1>
+<form nz-form [formGroup]="form" class="w-[400px]" nzLayout="vertical">
+  <nz-form-item>
+    <nz-form-label nzRequired>Name</nz-form-label>
+    <nz-form-control nzErrorTip="Please input Name">
+      <input nz-input type="text" formControlName="name" class="w-full" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <div class="grid grid-cols-2 gap-4">
+    <nz-form-item>
+      <nz-form-label nzRequired>Monthly Salary</nz-form-label>
+      <nz-form-control nzErrorTip="Please input Per Month Salary!">
+        <nz-input-number
+          nz-input
+          [nzStep]="1000"
+          type="text"
+          formControlName="monthlySalary"
+          class="w-full"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired>Leave Detection</nz-form-label>
+      <nz-form-control nzErrorTip="Please input Per Leave Detection!">
+        <nz-input-number
+          nz-input
+          [nzStep]="1000"
+          type="text"
+          formControlName="leaveDetection"
+          class="w-full"
+        />
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div class="grid grid-cols-2 gap-4">
+    <nz-form-item>
+      <nz-form-label nzRequired>OT Salary (hrs)</nz-form-label>
+      <nz-form-control nzErrorTip="Please input Ot Salary!">
+        <nz-input-number
+          nz-input
+          [nzStep]="1000"
+          type="text"
+          formControlName="otSalary"
+          class="w-full"
+        />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzRequired>Sunday Salary (hrs)</nz-form-label>
+      <nz-form-control nzErrorTip="Please input Per Day Salary!">
+        <nz-input-number
+          nz-input
+          [nzStep]="1000"
+          type="text"
+          formControlName="sundaySalary"
+          class="w-full"
+        />
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="flex gap-4">
+    <button nz-button [nzType]="'primary'" class="flex-grow" (click)="submit()">
+      {{ departmentId > 0 ? "Save" : "Add" }}
+    </button>
+    <button
+      nz-button
+      [nzType]="'default'"
+      class="flex-grow"
+      (click)="departmentId = -1; form.reset()"
+      *ngIf="departmentId > 0"
+    >
+      cancel
+    </button>
+  </div>
+</form>

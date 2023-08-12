@@ -1,0 +1,9 @@
+.master-div {
+  @apply flex items-center justify-center min-h-full bg-bg rounded-2xl;
+  .login-form {
+    @apply bg-secondary py-10 px-5 rounded-tl-2xl rounded-bl-2xl;
+  }
+  .left {
+    @apply h-[600px] w-[750px] p-10;
+  }
+}

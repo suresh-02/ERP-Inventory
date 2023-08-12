@@ -1,0 +1,171 @@
+<div class="flex justify-end mb-4">
+  <button nz-button (click)="downloadAsPdf()">Print</button>
+</div>
+<div #myDiv class="border-2 border-cyan-800 p-5" *ngIf="bill">
+  <div class="grid grid-cols-2 gap-4">
+    <div
+      class="col-span-2 flex justify-between border border-cyan-600 p-[10px] w-full"
+    >
+      <div>
+        <p>GST NO :33ARBPRa133K1ZW</p>
+        <p>SSI: 330011112536</p>
+      </div>
+      <div class="flex flex-col items-center">
+        <p class="font-bold underline text-base">DELIVERY NOTE</p>
+        <h1 class="font-bold text-4xl">KRAFT AUTO PARTS</h1>
+        <p class="text-xs text-center mt-4">
+          UNIT-IL,NO.20 8 21,VASANTHAM NAGAR,THIRUMUDIVAKKAM,<br />CHENNAI-600132.
+        </p>
+      </div>
+      <div>
+        <p>MOB: 9841302065/044-42137578</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 gap-2 border border-cyan-600 p-2">
+      <p>Name and Address of the consignee</p>
+      <p class="ml-2 font-bold text-lg">{{ bill.consigneeName }}</p>
+      <p>His Registration Certificate Number</p>
+      <p class="ml-2 font-bold text-lg">{{ bill.rcNo }}</p>
+      <p>GSTIN</p>
+      <p class="ml-2 font-bold text-lg">{{ bill.gstin }}</p>
+    </div>
+    <div class="border border-cyan-600 p-2">
+      <div class="flex gap-[100px]">
+        <div class="flex gap-2">
+          <p>SL No:</p>
+          <span class="font-bold">{{ bill.id }}</span>
+        </div>
+        <div class="flex gap-2">
+          <p>Date:</p>
+          <span class="font-bold">{{ bill.date | date : "dd-MM-yyyy" }}</span>
+        </div>
+      </div>
+      <div>
+        <h1>PARTICULARS OF PLACE</h1>
+        <div class="grid grid-cols-2 gap-2">
+          <p>(1) From which the goods are consigned:</p>
+          {{ bill.from }}
+          <p>(2) to which the goods are consigned:</p>
+          {{ bill.to }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- middle part of the invoice -->
+
+  <div class="my-5 flex gap-[250px] items-center">
+    <p class="ml-2 font-bold text-lg">Description of the Goods</p>
+    <div>
+      <p>Purchase Order NO: {{ bill.purchaseOrderNo }}</p>
+      <p>Your Excise NO: {{ bill.exciseNo }}</p>
+    </div>
+    <div>
+      <p>Date:{{ bill.date | date : "dd-MM-yyyy" }}</p>
+      <p>Date:{{ bill.date | date : "dd-MM-yyyy" }}</p>
+    </div>
+  </div>
+
+  <!-- table -->
+
+  <nz-table
+    [nzData]="bill.goods"
+    nzSize="small"
+    [nzShowPagination]="false"
+    class="border border-cyan-600 mb-[20px]"
+  >
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Quantity</th>
+        <th>Total Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of bill.goods">
+        <td>{{ data.description }}</td>
+        <td>{{ data.quantity }}</td>
+        <td>{{ data.totalAmount }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+  <!-- footer of the invoice -->
+
+  <div class="grid grid-cols-2 gap-4">
+    <div
+      class="col-span-2 flex flex-col justify-center items-start border border-cyan-600 p-2"
+    >
+      <div class="flex justify-start gap-4">
+        <p>Purpose of Transport: For</p>
+        <div>
+          <!-- <div>
+            <span
+              nz-icon
+              nzType="check-square"
+              nzTheme="outline"
+              *ngIf="bill.purpose === 'sale'; expression"
+            ></span>
+            Sale/Purchase
+          </div> -->
+          <label
+            nz-checkbox
+            [nzChecked]="bill.purpose === 'sale'"
+            [nzDisabled]="bill.purpose !== 'sale'"
+            >Sale/Purchase</label
+          >
+          <label
+            nz-checkbox
+            [nzChecked]="bill.purpose === 'shipment'"
+            [nzDisabled]="bill.purpose !== 'shipment'"
+            >Shipment</label
+          >
+          <label
+            nz-checkbox
+            [nzChecked]="bill.purpose === 'branchOff'"
+            [nzDisabled]="bill.purpose !== 'branchOff'"
+            >Branch Off</label
+          >
+          <label
+            nz-checkbox
+            [nzChecked]="bill.purpose === 'cutting'"
+            [nzDisabled]="bill.purpose !== 'cutting'"
+            >Cutting</label
+          >
+          <label
+            nz-checkbox
+            [nzChecked]="bill.purpose === 'labourWork'"
+            [nzDisabled]="bill.purpose !== 'labourWork'"
+            >Labour Work
+          </label>
+        </div>
+      </div>
+      <p>
+        5. To Whom delivered for Transport & Vehicle No.:
+        {{ bill.vehicleType }}-{{ bill.vehicleNo }}
+      </p>
+      <p>6. Remarks, if any {{ bill.remarks }}</p>
+    </div>
+    <div class="flex flex-col gap-[30px] border border-cyan-600 p-2">
+      <p>Received the above goods in order and condition.</p>
+      <p>Name and Signature of the person to whom the goods are delivered.</p>
+    </div>
+    <div>
+      <div
+        class="flex flex-col gap-[30px] justify-center p-2 items-center border border-cyan-600"
+      >
+        <h1 class="font-bold text-lg">
+          <span class="font-normal">For</span> KRAFT AUTO PARTS
+        </h1>
+        <p>
+          Name and Signature of the Consignor / his employee / his
+          representative
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <p class="mt-[8px]">Place:</p>
+  - Retum the duplicate duly signed with seal # Claim for shortage will not be
+  entertained after delivery of goods
+</div>

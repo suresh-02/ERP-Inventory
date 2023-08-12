@@ -1,0 +1,35 @@
+// .menu {
+//   @apply w-[250px] bg-[#1E293B] h-screen flex flex-col justify-between;
+.logo {
+  @apply p-3 flex flex-col items-center font-bold;
+}
+//   ul {
+//     .menu-item {
+//       @apply text-base gap-2 flex items-center p-2 px-4 m-2 hover:bg-[#334155] rounded cursor-pointer transition-all duration-300 text-white;
+//     }
+//     .smenu-item {
+//       @apply m-2 hover:bg-[#334155] rounded cursor-pointer transition-all duration-300;
+//       div:first-child {
+//         @apply flex items-center justify-between p-1.5 px-2;
+//         span {
+//           @apply text-base text-white leading-none;
+//         }
+//         > div {
+//           @apply flex items-center gap-2;
+//         }
+//       }
+//     }
+//     .sub-item-container {
+//       @apply m-2 rounded bg-[#10213b];
+//       .sub-items {
+//         @apply p-2 text-white hover:bg-[#334155] rounded cursor-pointer transition-all duration-300 flex items-center gap-4 pl-8;
+//       }
+//     }
+//   }
+// }
+.sider {
+  @apply w-[250px] rounded-xl shadow-md overflow-y-scroll;
+  height: calc(100vh - 50px);
+  margin-top: 25px;
+  margin-left: 15px;
+}

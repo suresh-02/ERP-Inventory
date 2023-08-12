@@ -1,0 +1,111 @@
+<div class="flex justify-center items-center">
+  <form
+    [formGroup]="form"
+    nz-form
+    class="w-[700px]"
+    nzLayout="vertical"
+    autocomplete="off"
+  >
+    <h1 class="text-lg font-medium text-center leading py-6">GST Details</h1>
+    <div class="grid grid-cols-2 gap-4">
+      <nz-form-item>
+        <nz-form-label nzRequired class="text-gray-700">GST Type</nz-form-label>
+        <nz-form-control nzErrorTip="Please select a type">
+          <nz-select type="text" formControlName="gstType">
+            <nz-option nzValue="UGST" nzLabel="UGST">UGST</nz-option>
+            <nz-option nzValue="CGST" nzLabel="CGST">CGST</nz-option>
+            <nz-option nzValue="IGST" nzLabel="IGST">IGST</nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired> GST No. </nz-form-label>
+        <nz-form-control nzErrorTip="Please enter the GST No.">
+          <input nz-input type="text" formControlName="gstIn" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired> State </nz-form-label>
+        <nz-form-control nzErrorTip="Please select a State">
+          <nz-select type="text" formControlName="state">
+            <nz-option nzValue="AndhraPradesh" nzLabel="Andhra Pradesh"
+              >Andhra Pradesh</nz-option
+            >
+            <nz-option nzValue="ArunachalPradesh" nzLabel="Arunachal Pradesh"
+              >Arunachal Pradesh</nz-option
+            >
+            <nz-option nzValue="Assam" nzLabel="Assam">Assam</nz-option>
+            <nz-option nzValue="Bihar" nzLabel="Bihar">Bihar</nz-option>
+            <nz-option nzValue="Chhattisgarh" nzLabel="Chhattisgarh"
+              >Chhattisgarh</nz-option
+            >
+            <nz-option nzValue="Goa" nzLabel="Goa">Goa</nz-option>
+            <nz-option nzValue="Gujarat" nzLabel="Gujarat">Gujarat</nz-option>
+            <nz-option nzValue="Haryana" nzLabel="Haryana">Haryana</nz-option>
+            <nz-option nzValue="HimachalPradesh" nzLabel="Himachal Pradesh"
+              >Himachal Pradesh</nz-option
+            >
+            <nz-option nzValue="Jharkhand" nzLabel="Jharkhand"
+              >Jharkhand</nz-option
+            >
+            <nz-option nzValue="Karnataka" nzLabel="Karnataka"
+              >Karnataka</nz-option
+            >
+            <nz-option nzValue="Kerala" nzLabel="Kerala">Kerala</nz-option>
+            <nz-option nzValue="MadhyaPradesh" nzLabel="Madhya Pradesh"
+              >Madhya Pradesh</nz-option
+            >
+            <nz-option nzValue="Maharashtra" nzLabel="Maharashtra"
+              >Maharashtra</nz-option
+            >
+            <nz-option nzValue="Manipur" nzLabel="Manipur">Manipur</nz-option>
+            <nz-option nzValue="Meghalaya" nzLabel="Meghalaya"
+              >Meghalaya</nz-option
+            >
+            <nz-option nzValue="Mizoram" nzLabel="Mizoram">Mizoram</nz-option>
+            <nz-option nzValue="Nagaland" nzLabel="Nagaland"
+              >Nagaland</nz-option
+            >
+            <nz-option nzValue="Odisha" nzLabel="Odisha">Odisha</nz-option>
+            <nz-option nzValue="Punjab" nzLabel="Punjab">Punjab</nz-option>
+            <nz-option nzValue="Rajasthan" nzLabel="Rajasthan"
+              >Rajasthan</nz-option
+            >
+            <nz-option nzValue="TamilNadu" nzLabel="Tamil Nadu"
+              >Tamil Nadu</nz-option
+            >
+            <nz-option nzValue="Telangana" nzLabel="Telangana"
+              >Telangana</nz-option
+            >
+            <nz-option nzValue="Tripura" nzLabel="Tripura">Tripura</nz-option>
+            <nz-option nzValue="UttarPradesh" nzLabel="Uttar Pradesh"
+              >Uttar Pradesh</nz-option
+            >
+            <nz-option nzValue="Uttarakhand" nzLabel="Uttarakhand"
+              >Uttarakhand</nz-option
+            >
+            <nz-option nzValue="WestBengal" nzLabel="West Bengal"
+              >West Bengal</nz-option
+            >
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired> PAN No.</nz-form-label>
+        <nz-form-control nzErrorTip="Please enter the PAN number">
+          <input nz-input type="text" formControlName="panNo" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="flex gap-4">
+      <button
+        nz-button
+        [nzType]="'primary'"
+        class="flex-grow"
+        (click)="submit()"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

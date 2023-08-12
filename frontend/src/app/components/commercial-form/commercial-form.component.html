@@ -1,0 +1,121 @@
+<div class="flex justify-center items-center">
+  <form
+    [formGroup]="form"
+    nz-form
+    class="w-[700px]"
+    nzLayout="vertical"
+    autocomplete="off"
+  >
+    <h1 class="text-lg font-medium text-center leading py-6">Commercial</h1>
+    <div class="grid grid-cols-2 gap-4">
+      <nz-form-item>
+        <nz-form-label nzRequired class="text-gray-700"
+          >Mode of dispatch</nz-form-label
+        >
+        <nz-form-control nzErrorTip="Please select an mode">
+          <nz-select formControlName="dispatch">
+            <nz-option nzValue="flight" nzLabel="Flight"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired class="text-gray-800">Terms</nz-form-label>
+        <nz-form-control nzErrorTip="Please enter the term">
+          <input nz-input type="text" formControlName="terms" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired> Price basics </nz-form-label>
+        <nz-form-control nzErrorTip="Please enter the form basics">
+          <input nz-input type="text" formControlName="basics" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired> Currency </nz-form-label>
+        <nz-form-control nzErrorTip="Please enter the Currency">
+          <input nz-input type="text" formControlName="currency" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired> Bill Sequence </nz-form-label>
+        <nz-form-control nzErrorTip="Please enter the bill sequence">
+          <input nz-input type="text" formControlName="sequence" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired> Sales Target </nz-form-label>
+        <nz-form-control nzErrorTip="Please enter the sales target">
+          <input nz-input type="text" formControlName="target" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <nz-form-item>
+      <nz-form-label nzRequired> Notes </nz-form-label>
+      <nz-form-control nzErrorTip="Please enter the Notes">
+        <input nz-input type="text" formControlName="notes" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <div class="grid grid-cols-2 gap-4">
+      <nz-form-item class="flex !flex-row items-center gap-4">
+        <nz-form-label nzRequired>Bank Name1</nz-form-label>
+        <nz-form-control nzErrorTip="Please check the branch name">
+          <label class="pb-2" nz-checkbox formControlName="bankName1"
+            >Undefined</label
+          >
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired> ACC No </nz-form-label>
+        <nz-form-control nzErrorTip="Please enter the Account number">
+          <input nz-input type="number" formControlName="accNo" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired> Branch Name </nz-form-label>
+        <nz-form-control nzErrorTip="Please enter the branch name">
+          <input nz-input type="number" formControlName="branchName" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired> IFSC code</nz-form-label>
+        <nz-form-control nzErrorTip="Please enter the ifsc code">
+          <input nz-input type="text" formControlName="ifsc" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <nz-form-item class="flex !flex-row items-center gap-4">
+        <nz-form-label nzRequired>Bank Name2</nz-form-label>
+        <nz-form-control nzErrorTip="Please check the branch name">
+          <label class="pb-2" nz-checkbox formControlName="bankName2"
+            >Undefined</label
+          >
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired> ACC No </nz-form-label>
+        <nz-form-control nzErrorTip="Please enter the Account number">
+          <input nz-input type="number" formControlName="accNo" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired> Branch Name </nz-form-label>
+        <nz-form-control nzErrorTip="Please enter the branch name">
+          <input nz-input type="number" formControlName="branchName" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired> IFSC code</nz-form-label>
+        <nz-form-control nzErrorTip="Please enter the ifsc code">
+          <input nz-input type="text" formControlName="ifsc" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </form>
+</div>

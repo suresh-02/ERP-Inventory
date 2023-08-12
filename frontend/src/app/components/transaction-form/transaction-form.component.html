@@ -1,0 +1,53 @@
+<h1 class="text-lg font-medium text-center">
+  {{ transactionId > 0 ? "Edit" : "Add" }} Transaction
+</h1>
+<form nz-form [formGroup]="form" class="w-[400px]" nzLayout="vertical">
+  <nz-form-item>
+    <nz-form-label nzRequired>Material</nz-form-label>
+    <nz-form-control nzErrorTip="Please select the material!">
+      <nz-select formControlName="inventoryId" class="w-full">
+        <nz-option
+          [nzValue]="i.id"
+          [nzLabel]="i.material"
+          *ngFor="let i of inventory"
+        ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="flex !flex-row items-center gap-4">
+    <nz-form-label nzRequired class="!p-0">Inward Or Outward</nz-form-label>
+    <nz-form-control>
+      <nz-radio-group formControlName="isInwardOrOutward">
+        <label nz-radio nzValue="inWard">Inward</label>
+        <label nz-radio nzValue="outWard">Outward</label>
+      </nz-radio-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired>Quantity</nz-form-label>
+    <nz-form-control nzErrorTip="Please enter the quantity!">
+      <nz-input-number
+        [nzStep]="10"
+        [nzMin]="selectedItem ? 1 : 0"
+        [nzMax]="selectedItem ? selectedItem.stock - selectedItem.usage : 0"
+        formControlName="quantity"
+        class="w-full"
+      ></nz-input-number>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div class="flex gap-4">
+    <button nz-button [nzType]="'primary'" class="flex-grow" (click)="submit()">
+      {{ transactionId > 0 ? "Save" : "Add" }}
+    </button>
+    <button
+      nz-button
+      [nzType]="'default'"
+      class="flex-grow"
+      (click)="transactionId = -1; form.reset()"
+      *ngIf="transactionId > 0"
+    >
+      cancel
+    </button>
+  </div>
+</form>

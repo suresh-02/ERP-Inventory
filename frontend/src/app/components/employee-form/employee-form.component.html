@@ -1,0 +1,44 @@
+<h1 class="text-lg font-medium text-center">
+  {{ employeeId > 0 ? "Edit" : "Add" }} Employee
+</h1>
+<form nz-form [formGroup]="form" class="w-[400px]" nzLayout="vertical">
+  <nz-form-item>
+    <nz-form-label nzRequired class="text-gray-700">Name</nz-form-label>
+    <nz-form-control nzErrorTip="Please input employee name">
+      <input nz-input type="text" formControlName="name" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired nzFor="regNo">Employee Id</nz-form-label>
+    <nz-form-control nzErrorTip="Please input employee id!">
+      <input nz-input type="text" formControlName="empId" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired>Department</nz-form-label>
+    <nz-form-control nzErrorTip="Please select department!">
+      <nz-select formControlName="deptId" class="w-full">
+        <nz-option [nzValue]="d.id" [nzLabel]="d.name" *ngFor="let d of departments"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>Mentor</nz-form-label>
+    <nz-form-control>
+      <nz-select formControlName="mentorId" class="w-full">
+        <nz-option [nzValue]="m.id" [nzLabel]="m.name" *ngFor="let m of mentors"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div class="flex gap-4">
+    <button nz-button [nzType]="'primary'" class="flex-grow" (click)="submit()">
+      {{ employeeId > 0 ? "Save" : "Add" }}
+    </button>
+    <button nz-button [nzType]="'default'" class="flex-grow" (click)="employeeId = -1; form.reset()"
+      *ngIf="employeeId > 0">
+      cancel
+    </button>
+  </div>
+</form>

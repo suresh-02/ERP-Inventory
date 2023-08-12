@@ -1,0 +1,108 @@
+<!-- <div class="menu">
+  <div>
+    <div class="logo">
+      <img src="assets/pec-logo.png" alt="logo" />
+    </div>
+    <ul>
+      <ng-container *ngFor="let m of menu; let id = index">
+        <li
+          class="menu-item"
+          *ngIf="!m.children"
+          [routerLink]="m.path"
+          routerLinkActive="bg-[#334155]"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <span
+            nz-icon
+            [nzType]="m.icon"
+            nzTheme="outline"
+            class="text-sky-500"
+          ></span>
+          <span>{{ m.title }}</span>
+        </li>
+        <li class="smenu-item" (click)="toggle(id)" *ngIf="m.children">
+          <div>
+            <div>
+              <span
+                nz-icon
+                [nzType]="m.icon"
+                nzTheme="outline"
+                class="!text-sky-500"
+              ></span>
+              <span>{{ m.title }}</span>
+            </div>
+            <span
+              nz-icon
+              [nzType]="dropdown.isOpen && dropdown.id === id ? 'up' : 'down'"
+              nzTheme="outline"
+              *ngIf="m.children"
+              class="!text-sky-500 !text-xs"
+            ></span>
+          </div>
+        </li>
+        <div
+          class="sub-item-container"
+          *ngIf="dropdown.isOpen && dropdown.id === id"
+          @slide
+        >
+          <div
+            *ngFor="let cm of m.children"
+            class="sub-items"
+            [routerLink]="cm.path"
+            routerLinkActive="bg-[#334155]"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <span
+              nz-icon
+              [nzType]="cm.icon"
+              nzTheme="outline"
+              class="text-sky-500"
+            ></span>
+            <span>{{ cm.title }}</span>
+          </div>
+        </div>
+      </ng-container>
+    </ul>
+  </div>
+</div> -->
+<ul nz-menu nzMode="inline" class="sider">
+  <div class="logo">
+    <img src="assets/pec-logo.png" alt="logo" />
+  </div>
+  <ng-container
+    *ngTemplateOutlet="menuTpl; context: { $implicit: menu }"
+  ></ng-container>
+  <ng-template #menuTpl let-menus>
+    <ng-container *ngFor="let menu of menus">
+      <li
+        *ngIf="!menu.children"
+        nz-menu-item
+        [nzPaddingLeft]="menu.level * 24"
+        [nzDisabled]="menu.disabled"
+        [nzSelected]="menu.selected"
+        nzMatchRouter
+      >
+        <span nz-icon [nzType]="menu.icon" *ngIf="menu.icon"></span>
+        <span
+          ><a [routerLink]="menu.link">{{ menu.title }}</a></span
+        >
+      </li>
+      <li
+        *ngIf="menu.children"
+        nz-submenu
+        [nzPaddingLeft]="menu.level * 24"
+        [nzOpen]="menu.open"
+        [nzTitle]="menu.title"
+        [nzIcon]="menu.icon"
+        [nzDisabled]="menu.disabled"
+        nzOpen
+      >
+        <ul>
+          <ng-container
+            *ngTemplateOutlet="menuTpl; context: { $implicit: menu.children }"
+          ></ng-container>
+        </ul>
+      </li>
+    </ng-container>
+  </ng-template>
+</ul>

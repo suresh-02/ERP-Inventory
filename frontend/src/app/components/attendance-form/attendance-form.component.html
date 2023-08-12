@@ -1,0 +1,15 @@
+<nz-transfer
+  [nzDataSource]="list"
+  [nzTitles]="['Present', 'Absentees']"
+  nzShowSearch
+  [nzListStyle]="{ 'width.px': 300, 'height.px': 400 }"
+  [nzRender]="render"
+  @fade
+  nzItemUnit="Employee"
+  nzItemsUnit="Employees"
+  (nzChange)="change($event)"
+>
+  <ng-template #render let-item>
+    {{ item.empId }} - {{ item.name }}
+  </ng-template>
+</nz-transfer>
